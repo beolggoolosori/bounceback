@@ -46,3 +46,12 @@
 - 캐스팅을 사용하는 경우에는 객체를 지정한 타입으로 변환하기 위해서 형변환 연산자가 개입될 수 있다. 대표적인 형변환 연산자가 바로 숫자 타입에 대한 형변환 연산자이다.
 
 - [C# 형변환에 대한 참고 블로그 글](https://jettstream.tistory.com/66#google_vignette)
+
+## item[4]: string.Format()을 보간 문자열로 대체하라
+
+### 내용 요약
+
+- 문자열 보간을 사용하면 코드가 더 읽기 쉽고 유지보수가 쉬워진다. 특히, 여러 개의 변수를 포함해야 하는 경우에 유용하다. 가능한 경우 string.Format() 대신 문자열 보간을 사용하는 것이 좋다.
+
+- [공식문서](https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/tokens/interpolated)
+

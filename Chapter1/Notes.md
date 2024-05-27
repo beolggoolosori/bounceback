@@ -55,3 +55,11 @@
 
 - [공식문서](https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/tokens/interpolated)
 
+## item[5]: 문화권 별로 다른 문자열을 생성하려면 FormattableString을 사용하라
+
+### 내용 요약
+
+- 문화권별 형식 적용: FormattableString을 사용하면 다양한 문화권에 맞게 숫자, 날짜, 통화 등을 자동으로 형식화할 수 있다.
+- 유지보수 용이성: 동일한 코드베이스에서 여러 문화권의 문자열을 관리할 수 있어 유지보수가 쉬워진다.
+- 유연성: 프로그램이 실행되는 동안에도 문화권을 변경하여 문자열 형식을 동적으로 바꿀 수 있다.
+- FormattableString을 사용하면 문자열 보간의 장점을 유지하면서, 특정 문화권에 맞게 형식화된 문자열을 생성할 수 있다. 이는 국제화가 필요한 애플리케이션 개발에 매우 유용하다.

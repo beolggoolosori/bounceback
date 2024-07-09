@@ -1,86 +1,47 @@
 ﻿using System;
 
-namespace MemberInitializationTest
+public class DatabaseConnection
 {
-    class InitializedAtDeclaration
+    // Lazy<T>를 사용하여 인스턴스 생성 지연
+    private static readonly Lazy<DatabaseConnection> instance = new Lazy<DatabaseConnection>(() => new DatabaseConnection());
+
+    // 외부에서 생성자 호출 방지
+    private DatabaseConnection()
     {
-        private int _value = 10;
-        private string _name = "default";
+        Console.WriteLine("DatabaseConnection 생성자 호출");
+    }
 
-        public InitializedAtDeclaration() { }
-
-        public InitializedAtDeclaration(int value)
+    // 인스턴스 접근자
+    public static DatabaseConnection Instance
+    {
+        get
         {
-            _value = value;
-        }
-
-        public void DisplayValues()
-        {
-            Console.WriteLine($"InitializedAtDeclaration -> Value: {_value}, Name: {_name}");
+            Console.WriteLine("Instance 호출");
+            return instance.Value;
         }
     }
 
-    class InitializedInConstructor
+    // 데이터베이스 연결 시뮬레이션
+    public void Connect()
     {
-        private int _value;
-        private string _name;
-
-        public InitializedInConstructor()
-        {
-            _value = 10;
-            _name = "default";
-        }
-
-        public InitializedInConstructor(int value)
-        {
-            _value = value;
-            _name = "default";
-        }
-
-        public void DisplayValues()
-        {
-            Console.WriteLine($"InitializedInConstructor -> Value: {_value}, Name: {_name}");
-        }
+        Console.WriteLine("Database 연결");
     }
+}
 
-    class Program
+class Program
+{
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            // InitializedAtDeclaration 클래스 테스트
-            var initializedAtDeclarationDefault = new InitializedAtDeclaration();
-            initializedAtDeclarationDefault.DisplayValues();
+        Console.WriteLine("메인 메서드 시작");
 
-            var initializedAtDeclarationWithValue = new InitializedAtDeclaration(20);
-            initializedAtDeclarationWithValue.DisplayValues();
+        // 첫 번째 인스턴스 요청 시에만 생성자가 호출됨
+        DatabaseConnection db1 = DatabaseConnection.Instance;
+        db1.Connect();
 
-            // InitializedInConstructor 클래스 테스트
-            var initializedInConstructorDefault = new InitializedInConstructor();
-            initializedInConstructorDefault.DisplayValues();
+        // 추가 요청은 생성하지 않고 기존 인스턴스 사용
+        DatabaseConnection db2 = DatabaseConnection.Instance;
+        db2.Connect();
 
-            var initializedInConstructorWithValue = new InitializedInConstructor(20);
-            initializedInConstructorWithValue.DisplayValues();
-
-            // 추가 테스트: 생성자에서 초기화 누락
-            var problematicInstance = new ProblematicClass();
-            problematicInstance.DisplayValues();
-        }
-    }
-
-    class ProblematicClass
-    {
-        private int _value;
-        private string _name;
-
-        public ProblematicClass()
-        {
-            // 의도적으로 _name 초기화를 생략하여 오류 발생 가능성을 테스트
-            _value = 10;
-        }
-
-        public void DisplayValues()
-        {
-            Console.WriteLine($"ProblematicClass -> Value: {_value}, Name: {_name ?? "null"}");
-        }
+        Console.WriteLine("메인 메서드 종료");
     }
 }

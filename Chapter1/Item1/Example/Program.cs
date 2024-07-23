@@ -8,7 +8,7 @@ public class Program
         // var를 사용하여 초기화되는 변수
         var data = GetData();
         Console.WriteLine("데이터 타입: " + data.GetType().Name);
-        
+
         // 작업을 수행하는 과정에서 변수의 실제 타입을 명확히 인지하지 못하는 경우
         if (data is List<int>)
         {

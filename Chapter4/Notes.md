@@ -49,3 +49,8 @@
 - 쿼리 표현식(Query Expression): LINQ 쿼리를 SQL과 유사한 구문으로 작성하는 방식.
 - 메서드 호출 구문(Method Call Syntax): 메서드 체인을 사용하여 LINQ 쿼리를 작성하는 방식.
 - 데이터 소스(Data Source): LINQ 쿼리를 수행하는 대상 데이터 컬렉션.
+
+## item[37]: 쿼리를 사용할 때는 즉시 평가보다 지연 평가가 낫다
+
+- 즉시 평가(Immediate Evaluation): 쿼리가 정의되는 즉시 데이터를 처리하고 결과를 반환하는 방식.
+- 지연 평가(Deferred Evaluation): 쿼리가 정의될 때는 데이터 처리를 미루고, 실제로 데이터가 필요할 때 처리를 수행하는 방식.

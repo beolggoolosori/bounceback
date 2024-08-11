@@ -1,73 +1,66 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-public class Employee
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
-    public decimal Salary { get; set; }
-}
-
-
---즉시 평가
 
 public class Program
 {
     public static void Main()
     {
-        var employees = new List<Employee>
+        Func<int, int> divideByNumber = x => 10 / x;
+
+        try
         {
-            new Employee { Name = "John", Age = 28, Salary = 50000 },
-            new Employee { Name = "Jane", Age = 34, Salary = 60000 },
-            new Employee { Name = "Doe", Age = 45, Salary = 70000 },
-            new Employee { Name = "Smith", Age = 23, Salary = 40000 }
+            int result = divideByNumber(0); // 0으로 나누기 때문에 예외 발생
+            Console.WriteLine(result);
+        }
+        catch (DivideByZeroException ex)
+        {
+            Console.WriteLine($"Exception caught: {ex.Message}");
+        }
+    }
+}
+
+using System;
+
+public class Program
+{
+    public static void Main()
+    {
+        Func<int, int?> divideByNumber = x =>
+        {
+            if (x == 0)
+            {
+                Console.WriteLine("Cannot divide by zero.");
+                return null; // 예외 대신 null을 반환하여 안전하게 처리
+            }
+            return 10 / x;
         };
 
-        // 즉시 평가: ToList()를 사용하여 쿼리가 즉시 실행됩니다.
-        var highSalaryEmployees = employees
-            .Where(emp => emp.Salary > 50000)
-            .ToList();
-
-        // 데이터를 추가한 후
-        employees.Add(new Employee { Name = "Alice", Age = 30, Salary = 80000 });
-
-        // 즉시 평가된 결과를 출력 (새로운 데이터가 반영되지 않음)
-        Console.WriteLine("Immediate Evaluation:");
-        foreach (var emp in highSalaryEmployees)
+        int? result = divideByNumber(0);
+        if (result.HasValue)
         {
-            Console.WriteLine($"Name: {emp.Name}, Salary: {emp.Salary}");
+            Console.WriteLine(result.Value);
         }
     }
 }
 
 
---지연 평가
+using System;
 
 public class Program
 {
     public static void Main()
     {
-        var employees = new List<Employee>
+        Action<int> printDivisionResult = x =>
         {
-            new Employee { Name = "John", Age = 28, Salary = 50000 },
-            new Employee { Name = "Jane", Age = 34, Salary = 60000 },
-            new Employee { Name = "Doe", Age = 45, Salary = 70000 },
-            new Employee { Name = "Smith", Age = 23, Salary = 40000 }
+            if (x == 0)
+            {
+                Console.WriteLine("Cannot divide by zero.");
+            }
+            else
+            {
+                Console.WriteLine(10 / x);
+            }
         };
 
-        // 지연 평가: IEnumerable<T>를 사용하여 쿼리가 즉시 실행되지 않습니다.
-        var highSalaryEmployees = employees
-            .Where(emp => emp.Salary > 50000);
-
-        // 데이터를 추가한 후
-        employees.Add(new Employee { Name = "Alice", Age = 30, Salary = 80000 });
-
-        // 지연 평가된 결과를 출력 (새로운 데이터가 반영됨)
-        Console.WriteLine("Deferred Evaluation:");
-        foreach (var emp in highSalaryEmployees)
-        {
-            Console.WriteLine($"Name: {emp.Name}, Salary: {emp.Salary}");
-        }
+        printDivisionResult(0); // 0으로 나누는 경우를 안전하게 처리
     }
 }
